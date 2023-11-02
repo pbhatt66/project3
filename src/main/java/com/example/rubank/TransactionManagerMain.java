@@ -12,9 +12,11 @@ public class TransactionManagerMain extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(TransactionManagerMain.class.getResource("TransactionManagerView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        stage.setTitle("Project 3 - Transaction Manager");
         stage.setScene(scene);
         stage.show();
+        stage.setMinHeight(615);
+        stage.setMinWidth(615);
     }
 
     public static void main(String[] args) {
