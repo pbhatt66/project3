@@ -20,27 +20,27 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <TabPane prefHeight="330.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Open/Close">
+          <Tab text="Open">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="600.0">
                      <children>
-                        <GridPane layoutX="26.0" layoutY="21.0" prefHeight="263.0" prefWidth="555.0">
+                        <GridPane layoutX="26.0" layoutY="21.0" prefHeight="263.0" prefWidth="548.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.20001220703125" minWidth="10.0" prefWidth="150.9999755859375" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.2000366210938" minWidth="10.0" prefWidth="254.20002441406254" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.00002441406252" minWidth="10.0" prefWidth="150.39997558593745" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.2000366210938" minWidth="10.0" prefWidth="244.59995117187503" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.00002441406252" minWidth="10.0" prefWidth="152.60004882812507" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints maxHeight="43.400003814697264" minHeight="10.0" prefHeight="28.20002212524414" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="66.59997787475587" minHeight="10.0" prefHeight="31.200007629394534" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="77.39999237060547" minHeight="10.0" prefHeight="34.39998779296873" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="127.20000610351562" minHeight="10.0" prefHeight="127.20000610351562" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="63.40000915527344" minHeight="4.599981689453131" prefHeight="31.99999389648437" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="127.20000610351562" minHeight="10.0" prefHeight="109.19998779296876" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="63.40000915527344" minHeight="4.599981689453131" prefHeight="46.00001220703123" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="63.40000915527344" minHeight="10.0" prefHeight="36.80000000000001" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="136.0" text="First Name" />
@@ -76,7 +76,7 @@
                                 </rowConstraints>
                                  <children>
                                     <CheckBox mnemonicParsing="false" text="Loyal Customer" GridPane.rowIndex="1" />
-                                    <GridPane>
+                                    <GridPane prefHeight="48.0" prefWidth="150.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
@@ -93,26 +93,69 @@
                                     </GridPane>
                                  </children>
                               </GridPane>
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <children>
-                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Open" />
-                                    <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Close">
-                                       <HBox.margin>
-                                          <Insets left="25.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Open" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <GridPane.margin>
-                                    <Insets top="4.0" />
-                                 </GridPane.margin>
-                              </HBox>
-                              <Button alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Clear" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <Insets left="20.0" />
+                                 </GridPane.margin></Button>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="135.0" text="Deposit Amount" GridPane.rowIndex="4" />
+                              <TextField prefHeight="26.0" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Close">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="283.0" prefWidth="600.0">
+                     <children>
+                        <GridPane layoutX="25.0" layoutY="23.0" prefHeight="265.0" prefWidth="402.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.20001220703125" minWidth="10.0" prefWidth="150.9999755859375" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.2000366210938" minWidth="10.0" prefWidth="244.59995117187503" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="43.400003814697264" minHeight="10.0" prefHeight="28.20002212524414" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="66.59997787475587" minHeight="10.0" prefHeight="31.200007629394534" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="77.39999237060547" minHeight="10.0" prefHeight="34.39998779296873" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="127.20000610351562" minHeight="10.0" prefHeight="109.19998779296876" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="63.40000915527344" minHeight="10.0" prefHeight="36.80000000000001" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="136.0" text="First Name" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="136.0" text="Last Name" GridPane.rowIndex="1" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="135.0" text="Account Type" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="136.0" text="Date of Birth" GridPane.rowIndex="2" />
+                              <TextField prefHeight="14.0" prefWidth="249.0" GridPane.columnIndex="1" />
+                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker prefHeight="26.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <GridPane prefHeight="106.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" text="Checking" />
+                                    <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" />
+                                    <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
+                                    <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
           <Tab text="Deposit/Withdraw">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -203,7 +246,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <MenuBar layoutY="1.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                        <MenuBar layoutX="205.0" layoutY="29.0" AnchorPane.leftAnchor="205.0" AnchorPane.topAnchor="29.0">
                           <menus>
                             <Menu mnemonicParsing="false" text="Account">
                               <items>
