@@ -4,6 +4,7 @@ package com.example.rubank;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
 
 public class TransactionManagerController {
     private static final String CHECKING = "Checking";
@@ -41,23 +42,33 @@ public class TransactionManagerController {
         fName_close.textProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
         lName_close.textProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
         dob_close.valueProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
+
+        depositButton.setDisable(true);
+        withdrawButton.setDisable(true);
+        fName_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
+        lName_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
+        dob_DW.valueProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
+        amount_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
+
     }
 
     @FXML
     private void open(ActionEvent event) {
         String fName = fName_open.getText();
+        fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
         String lName = lName_open.getText();
+        lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
         String dobString = dob_open.getValue().toString();
         // System.out.println(dobString);
         Date dob;
         try {
             dob = parseDate(dobString);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            messageArea.appendText(e.getMessage() + "\n");
             return;
         }
         if (!dob.isOver16()) {
-            System.out.println("DOB Invalid: " + dobString + " under 16.");
+            messageArea.appendText("DOB Invalid: " + dobString + " under 16.\n");
             return;
         }
 
@@ -95,14 +106,16 @@ public class TransactionManagerController {
     @FXML
     private void close() {
         String fName = fName_close.getText();
+        fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
         String lName = lName_close.getText();
+        lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
         String dobString = dob_close.getValue().toString();
 
         Date dob;
         try {
             dob = parseDate(dobString);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            messageArea.appendText(e.getMessage() + "\n");
             return;
         }
         Profile profile = new Profile(fName, lName, dob);
@@ -121,12 +134,118 @@ public class TransactionManagerController {
         if (database.close(account)) {
             messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") has been closed.\n");
         }
-        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountType + ") is not in the database.\n");
+        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") is not in the database.\n");
     }
     @FXML
     private void closeKeyReleasedProperty() {
         boolean isDisabled = fName_close.getText().isEmpty() || lName_close.getText().isEmpty() || dob_close.getValue() == null;
         closeButton.setDisable(isDisabled);
+    }
+
+    @FXML
+    private Button depositButton, withdrawButton;
+    @FXML
+    private TextField fName_DW, lName_DW, amount_DW;
+    @FXML
+    private DatePicker dob_DW;
+    @FXML
+    private void deposit() {
+        String fName = fName_DW.getText();
+        fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
+        String lName = lName_DW.getText();
+        lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
+        String dobString = dob_DW.getValue().toString();
+
+        Date dob;
+        try {
+            dob = parseDate(dobString);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        Profile profile = new Profile(fName, lName, dob);
+        double amount;
+        try {
+            amount = Double.parseDouble(amount_DW.getText());
+            if (amount <= 0) {
+                messageArea.appendText("Deposit amount cannot be 0 or negative.\n");
+                return;
+            }
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Deposit amount must be a number.");
+            return;
+        }
+        Account account;
+        String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
+        switch (accountTypeString) {
+            case CHECKING -> account = new Checking(profile, amount);
+            case COLLEGE_CHECKING -> account = new CollegeChecking(profile, amount);
+            case SAVINGS -> account = new Savings(profile, amount);
+            case MONEY_MARKET -> account = new MoneyMarket(profile, amount);
+            default -> {
+                System.out.println("Invalid account type: " + accountTypeString);
+                return;
+            }
+        }
+        if (database.deposit(account)) {
+            messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") Deposit - balance updated.\n");
+        }
+        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") is not in the database.\n");
+    }
+    @FXML
+    private void withdraw() {
+        String fName = fName_DW.getText();
+        fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
+        String lName = lName_DW.getText();
+        lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
+        String dobString = dob_DW.getValue().toString();
+
+        Date dob;
+        try {
+            dob = parseDate(dobString);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        Profile profile = new Profile(fName, lName, dob);
+        double amount;
+        try {
+            amount = Double.parseDouble(amount_DW.getText());
+            if (amount <= 0) {
+                messageArea.appendText("Withdraw amount cannot be 0 or negative.\n");
+                return;
+            }
+        }
+        catch (NumberFormatException e) {
+            messageArea.appendText("Not a valid amount.\n");
+            return;
+        }
+
+        Account account;
+        String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
+        switch (accountTypeString) {
+            case CHECKING -> account = new Checking(profile, amount);
+            case COLLEGE_CHECKING -> account = new CollegeChecking(profile, amount);
+            case SAVINGS -> account = new Savings(profile, amount);
+            case MONEY_MARKET -> account = new MoneyMarket(profile, amount);
+            default -> {
+                System.out.println("Invalid account type: " + accountTypeString);
+                return;
+            }
+        }
+        if (database.withdraw(account)) {
+            messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountType + ") Withdraw - balance updated.\n");
+        }
+        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountType + ") is not in the database.\n");
+
+    }
+
+    @FXML
+    private void dwKeyReleasedProperty() {
+        boolean isDisabled = fName_DW.getText().isEmpty() || lName_DW.getText().isEmpty() || dob_DW.getValue() == null || amount_DW.getText().isEmpty();
+        depositButton.setDisable(isDisabled);
+        withdrawButton.setDisable(isDisabled);
     }
 
 }
