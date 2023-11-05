@@ -1,6 +1,5 @@
 package com.example.rubank;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -53,7 +52,7 @@ public class TransactionManagerController {
     }
 
     @FXML
-    private void open(ActionEvent event) {
+    private void open() {
         String fName = fName_open.getText();
         fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
         String lName = lName_open.getText();
@@ -61,19 +60,17 @@ public class TransactionManagerController {
         String dobString = dob_open.getValue().toString();
         // System.out.println(dobString);
         Date dob;
-        try {
-            dob = parseDate(dobString);
+        try { dob = parseDate(dobString);
         } catch (Exception e) {
             messageArea.appendText(e.getMessage() + "\n");
-            return;
-        }
+            return; }
         if (!dob.isOver16()) {
             messageArea.appendText("DOB Invalid: " + dobString + " under 16.\n");
             return;
         }
 
         String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
-        System.out.println(accountTypeString);
+        // System.out.println(accountTypeString);
         messageArea.appendText("Account opened for " + fName + " " + lName + " born on " + dobString + "\n");
     }
 
@@ -246,6 +243,26 @@ public class TransactionManagerController {
         boolean isDisabled = fName_DW.getText().isEmpty() || lName_DW.getText().isEmpty() || dob_DW.getValue() == null || amount_DW.getText().isEmpty();
         depositButton.setDisable(isDisabled);
         withdrawButton.setDisable(isDisabled);
+    }
+
+    @FXML
+    private Button printButton, printInterestAndFeesButton, printUpdatedBalancesButton, loadFromFileButton;
+    @FXML
+    private void print() {
+        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+        else messageArea.appendText(database.printSorted());
+    }
+
+    @FXML
+    private void printInterestAndFees() {
+        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+        else messageArea.appendText(database.printFeesAndInterests());
+    }
+
+    @FXML
+    private void printUpdatedBalances() {
+        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+        else messageArea.appendText(database.printUpdatedBalances());
     }
 
 }

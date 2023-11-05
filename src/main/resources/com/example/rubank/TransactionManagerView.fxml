@@ -219,10 +219,10 @@
                                         <RowConstraints maxHeight="109.19998779296876" minHeight="10.0" prefHeight="77.20000610351562" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="41.0" prefWidth="250.0" text="Print All Accounts" />
-                                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Load Accounts from a File" GridPane.columnIndex="1" />
-                                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Print Interest and Fees" GridPane.rowIndex="1" />
-                                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Update Accounts with Interests and Fees" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Button fx:id="printButton" alignment="CENTER" mnemonicParsing="false" prefHeight="41.0" prefWidth="250.0" text="Print All Accounts" onAction="#print"/>
+                                        <Button fx:id="loadFromFileButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Load Accounts from a File" GridPane.columnIndex="1"/>
+                                        <Button fx:id="printInterestAndFeesButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Print Interest and Fees" GridPane.rowIndex="1" onAction="#printInterestAndFees"/>
+                                        <Button fx:id="printUpdatedBalancesButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Update Accounts with Interests and Fees" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#printUpdatedBalances"/>
                                     </children>
                                 </GridPane>
                             </children>
