@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rubank.TransactionManagerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rubank.TransactionManagerController">
     <fx:define>
         <ToggleGroup fx:id="accountType" />
         <ToggleGroup fx:id="campus" />
@@ -95,9 +113,9 @@
                                         <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="136.0" text="Last Name" GridPane.rowIndex="1" />
                                         <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="135.0" text="Account Type" GridPane.rowIndex="3" />
                                         <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="136.0" text="Date of Birth" GridPane.rowIndex="2" />
-                                        <TextField prefHeight="14.0" prefWidth="249.0" GridPane.columnIndex="1" />
-                                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <DatePicker prefHeight="26.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextField fx:id="fName_close" prefHeight="14.0" prefWidth="249.0" GridPane.columnIndex="1" onKeyReleased="#closeKeyReleasedProperty"/>
+                                        <TextField fx:id="lName_close" GridPane.columnIndex="1" GridPane.rowIndex="1" onKeyReleased="#closeKeyReleasedProperty"/>
+                                        <DatePicker fx:id="dob_close" prefHeight="26.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="2" onKeyReleased="#closeKeyReleasedProperty"/>
                                         <GridPane prefHeight="106.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -108,13 +126,13 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <RadioButton mnemonicParsing="false" text="Checking" />
-                                                <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" />
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" />
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <RadioButton mnemonicParsing="false" text="Checking" toggleGroup="$accountType"/>
+                                                <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
                                             </children>
                                         </GridPane>
-                                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#close">
                                             <GridPane.margin>
                                                 <Insets left="20.0" />
                                             </GridPane.margin>
