@@ -10,6 +10,9 @@ public class TransactionManagerController {
     private static final String COLLEGE_CHECKING = "College Checking";
     private static final String SAVINGS = "Savings";
     private static final String MONEY_MARKET = "Money Market";
+    private static final String NB = "NB";
+    private static final String NEWARK = "Newark";
+    private static final String CAMDEN = "Camden";
 
     @FXML
     private TextField fName_open, lName_open, depositAmount_open;
@@ -68,10 +71,73 @@ public class TransactionManagerController {
             messageArea.appendText("DOB Invalid: " + dobString + " under 16.\n");
             return;
         }
+        Profile profile = new Profile(fName, lName, dob);
+        double depositAmount;
+        try {
+            depositAmount = Double.parseDouble(depositAmount_open.getText());
+            if (depositAmount <= 0) {
+                messageArea.appendText("Deposit amount cannot be 0 or negative.\n");
+                return;
+            }
+        }
+        catch (NumberFormatException e) {
+            messageArea.appendText("Not a valid amount.\n");
+            return;
+        }
 
         String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
         // System.out.println(accountTypeString);
-        messageArea.appendText("Account opened for " + fName + " " + lName + " born on " + dobString + "\n");
+        // messageArea.appendText("Account opened for " + fName + " " + lName + " born on " + dobString + "\n");
+        Account account;
+        switch (accountTypeString) {
+            case CHECKING ->  {
+                account = new Checking(profile, depositAmount);
+                if (database.open(account)) {
+                    messageArea.appendText(fName + " " + lName + " " + dobString + "(C) opened.\n");
+                }
+                else messageArea.appendText(fName + " " + lName + " " + dobString + "(C) is already in the database.\n");
+            }
+            case COLLEGE_CHECKING -> {
+                String campusString = ((RadioButton) campus.getSelectedToggle()).getText();
+                Campus campus;
+                switch (campusString) {
+                    case NB -> campus = Campus.NEW_BRUNSWICK;
+                    case NEWARK -> campus = Campus.NEWARK;
+                    case CAMDEN -> campus = Campus.CAMDEN;
+                    default -> {
+                        System.out.println("Invalid campus: " + campusString);
+                        return;
+                    }
+                }
+                account = new CollegeChecking(profile, depositAmount, campus);
+                if (database.open(account)) {
+                    messageArea.appendText(fName + " " + lName + " " + dobString + "(CC) opened.\n");
+                }
+                else messageArea.appendText(fName + " " + lName + " " + dobString + "(CC) is already in the database.\n");
+
+            }
+            case SAVINGS -> {
+                int loyalCustomerInt = loyalCustomer.isSelected() ? 1 : 0;
+                boolean isLoyalCustomer = (loyalCustomerInt == 1);
+                account = new Savings(profile, depositAmount, isLoyalCustomer);
+                if (database.open(account)) {
+                    messageArea.appendText(fName + " " + lName + " " + dobString + "(S) opened.\n");
+                }
+                else messageArea.appendText(fName + " " + lName + " " + dobString + "(S) is already in the database.\n");
+            }
+            case MONEY_MARKET -> {
+account = new MoneyMarket(profile, depositAmount);
+                if (database.open(account)) {
+                    messageArea.appendText(fName + " " + lName + " " + dobString + "(M) opened.\n");
+                }
+                else messageArea.appendText(fName + " " + lName + " " + dobString + "(M) is already in the database.\n");
+            }
+            default -> {
+                System.out.println("Invalid account type: " + accountTypeString);
+                return;
+            }
+        }
+
     }
 
     @FXML
@@ -249,20 +315,20 @@ public class TransactionManagerController {
     private Button printButton, printInterestAndFeesButton, printUpdatedBalancesButton, loadFromFileButton;
     @FXML
     private void print() {
-        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
-        else messageArea.appendText(database.printSorted());
+//        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+//        else messageArea.appendText(database.printSorted());
     }
 
     @FXML
     private void printInterestAndFees() {
-        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
-        else messageArea.appendText(database.printFeesAndInterests());
+//        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+//        else messageArea.appendText(database.printFeesAndInterests());
     }
 
     @FXML
     private void printUpdatedBalances() {
-        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
-        else messageArea.appendText(database.printUpdatedBalances());
+//        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+//        else messageArea.appendText(database.printUpdatedBalances());
     }
 
 }
