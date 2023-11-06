@@ -139,11 +139,13 @@ public class TransactionManagerController {
         lName_open.textProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
         dob_open.valueProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
         depositAmount_open.textProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
+        accountType_open.selectedToggleProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
 
         closeButton.setDisable(true);
         fName_close.textProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
         lName_close.textProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
         dob_close.valueProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
+        accountType_close.selectedToggleProperty().addListener((observable, oldValue, newValue) -> closeKeyReleasedProperty());
 
         depositButton.setDisable(true);
         withdrawButton.setDisable(true);
@@ -151,6 +153,7 @@ public class TransactionManagerController {
         lName_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
         dob_DW.valueProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
         amount_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
+        accountType_DW.selectedToggleProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
 
     }
     @FXML
@@ -425,6 +428,9 @@ account = new MoneyMarket(profile, depositAmount);
 
         if (database.withdraw(account)) {
             messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") Withdraw - balance updated.\n");
+        }
+        else if (account.balance < amount) {
+            messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") Withdraw - insufficient funds.\n");
         }
         else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") is not in the database.\n");
 
