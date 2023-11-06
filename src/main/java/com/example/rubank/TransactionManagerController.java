@@ -546,7 +546,7 @@ public class TransactionManagerController {
                             Account account = new Savings(profile, depositAmount, isLoyalCustomer);
                             database.open(account);
                         }
-                        case "M" -> {
+                        case "MM" -> {
                             Account account = new MoneyMarket(profile, depositAmount);
                             database.open(account);
                         }
