@@ -292,10 +292,18 @@ account = new MoneyMarket(profile, depositAmount);
                 return;
             }
         }
-        if (database.close(account)) {
-            messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") has been closed.\n");
+        String accountTypeShortString = "";
+        switch (accountTypeString) {
+            case CHECKING -> accountTypeShortString = "C";
+            case COLLEGE_CHECKING -> accountTypeShortString = "CC";
+            case SAVINGS -> accountTypeShortString = "S";
+            case MONEY_MARKET -> accountTypeShortString = "M";
         }
-        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") is not in the database.\n");
+
+        if (database.close(account)) {
+            messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") has been closed.\n");
+        }
+        else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") is not in the database.\n");
     }
     @FXML
     private void closeKeyReleasedProperty() {
@@ -353,10 +361,18 @@ account = new MoneyMarket(profile, depositAmount);
                 return;
             }
         }
-        if (database.deposit(account)) {
-            messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") Deposit - balance updated.\n");
+        String accountTypeShortString = "";
+        switch (accountTypeString) {
+            case CHECKING -> accountTypeShortString = "C";
+            case COLLEGE_CHECKING -> accountTypeShortString = "CC";
+            case SAVINGS -> accountTypeShortString = "S";
+            case MONEY_MARKET -> accountTypeShortString = "M";
         }
-        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountTypeString + ") is not in the database.\n");
+
+        if (database.deposit(account)) {
+            messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") Deposit - balance updated.\n");
+        }
+        else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") is not in the database.\n");
     }
     @FXML
     private void withdraw() {
@@ -399,10 +415,18 @@ account = new MoneyMarket(profile, depositAmount);
                 return;
             }
         }
-        if (database.withdraw(account)) {
-            messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeString + ") Withdraw - balance updated.\n");
+        String accountTypeShortString = "";
+        switch (accountTypeString) {
+            case CHECKING -> accountTypeShortString = "C";
+            case COLLEGE_CHECKING -> accountTypeShortString = "CC";
+            case SAVINGS -> accountTypeShortString = "S";
+            case MONEY_MARKET -> accountTypeShortString = "M";
         }
-        else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeString + ") is not in the database.\n");
+
+        if (database.withdraw(account)) {
+            messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") Withdraw - balance updated.\n");
+        }
+        else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") is not in the database.\n");
 
     }
 
@@ -492,7 +516,7 @@ account = new MoneyMarket(profile, depositAmount);
                         }
                     }
                 }
-                messageArea.appendText("Accounts imported from file successful.\n");
+                messageArea.appendText("Accounts imported from file successfully.\n");
             }
             catch (IOException e) {
                 messageArea.appendText("Error reading file: " + targetFile.getName() + "\n");
