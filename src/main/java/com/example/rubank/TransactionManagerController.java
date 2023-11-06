@@ -19,27 +19,41 @@ public class TransactionManagerController {
     private static final String CAMDEN = "Camden";
 
     @FXML
-    private TextField fName_open, lName_open, depositAmount_open;
+    private TextField fName_open, lName_open, depositAmount_open, fName_DW, lName_DW, amount_DW, fName_close, lName_close;
     @FXML
-    private DatePicker dob_open;
+    private DatePicker dob_open, dob_close, dob_DW;
     @FXML
-    private RadioButton checking_open, collegeChecking_open, savings_open, moneyMarket_open;
+    private RadioButton checking_open, collegeChecking_open, savings_open, moneyMarket_open, checking_DW, collegeChecking_DW, savings_DW, moneyMarket_DW;;
     @FXML
     private RadioButton nb_open, newark_open, camden_open;
     @FXML
-    private ToggleGroup accountType_open, campus;
+    private ToggleGroup accountType_open, campus, accountType_DW, accountType_close;
     @FXML
     private CheckBox loyalCustomer;
     @FXML
-    private Button openButton;
+    private Button openButton, depositButton, withdrawButton, closeButton;
     @FXML
     private TextArea messageArea;
     @FXML
     private TabPane tabPane;
     @FXML
     private Tab openTab, closeTab, depositWithdrawTab;
+    @FXML
+    private RadioButton checking_close, collegeChecking_close, savings_close, moneyMarket_close;
 
     private AccountDatabase database = new AccountDatabase();
+
+    private Date parseDate(String dateString) throws Exception {
+        String[] dateParts = dateString.split("-");
+        int month = Integer.parseInt(dateParts[1]);
+        int day = Integer.parseInt(dateParts[2]);
+        int year = Integer.parseInt(dateParts[0]);
+
+        Date date = new Date(year, month, day);
+        if (!date.isValid()) throw new Exception("DOB invalid: " + date.toString() + " not a valid calendar date!");
+        if (date.isFutureDate()) throw new Exception("DOB invalid: " + date.toString() + " cannot be today or a future day.");
+        return date;
+    }
 
     public void initialize() {
         openTab.setOnSelectionChanged(event -> {
@@ -138,11 +152,11 @@ public class TransactionManagerController {
         dob_DW.valueProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
         amount_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
 
-//        openButton.setOnAction(event -> clearOpenTab());
-//        closeButton.setOnAction(event -> clearCloseTab());
-//        depositButton.setOnAction(event -> clearDepositWithdrawTab());
-//        withdrawButton.setOnAction(event -> clearDepositWithdrawTab());
-
+    }
+    @FXML
+    private void handleOpenButtonAction() {
+        open();
+        clearOpenTab();
     }
 
     @FXML
@@ -244,28 +258,12 @@ account = new MoneyMarket(profile, depositAmount);
         openButton.setDisable(isDisabled);
     }
 
-    private Date parseDate(String dateString) throws Exception {
-        String[] dateParts = dateString.split("-");
-        int month = Integer.parseInt(dateParts[1]);
-        int day = Integer.parseInt(dateParts[2]);
-        int year = Integer.parseInt(dateParts[0]);
-
-        Date date = new Date(year, month, day);
-        if (!date.isValid()) throw new Exception("DOB invalid: " + date.toString() + " not a valid calendar date!");
-        if (date.isFutureDate()) throw new Exception("DOB invalid: " + date.toString() + " cannot be today or a future day.");
-        return date;
+    @FXML
+    private void handleCloseButtonAction() {
+        close();
+        clearCloseTab();
     }
 
-    @FXML
-    private Button closeButton;
-    @FXML
-    private TextField fName_close, lName_close;
-    @FXML
-    private ToggleGroup accountType_close;
-    @FXML
-    private RadioButton checking_close, collegeChecking_close, savings_close, moneyMarket_close;
-    @FXML
-    private DatePicker dob_close;
     @FXML
     private void close() {
         String fName = fName_close.getText();
@@ -306,15 +304,15 @@ account = new MoneyMarket(profile, depositAmount);
     }
 
     @FXML
-    private ToggleGroup accountType_DW;
+    private void handleDepositButtonAction() {
+        deposit();
+        clearDepositWithdrawTab();
+    }
     @FXML
-    private RadioButton checking_DW, collegeChecking_DW, savings_DW, moneyMarket_DW;
-    @FXML
-    private Button depositButton, withdrawButton;
-    @FXML
-    private TextField fName_DW, lName_DW, amount_DW;
-    @FXML
-    private DatePicker dob_DW;
+    private void handleWithdrawButtonAction() {
+        withdraw();
+        clearDepositWithdrawTab();
+    }
     @FXML
     private void deposit() {
         String fName = fName_DW.getText();
