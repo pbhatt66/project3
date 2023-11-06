@@ -140,16 +140,18 @@ public class AccountDatabase {
     }
 
     /**
-     * Prints all accounts in the database,
-     * sorted by the account types then account holder's profiles (last name, first name, dob).
+     * Returns string output of all accounts in the database.
+     * @return the number of accounts in the array
      */
-    public void printSorted() {
+    public String printSorted() {
         bubbleSort();
-        System.out.println("\n*Accounts sorted by account type and profile.");
+        String str = "";
+        str += "\n*Accounts sorted by account type and profile.\n";
         for (int i = 0; i < numAcct; i++) {
-            System.out.println(accounts[i].toString());
+            str += accounts[i].toString() + "\n";
         }
-        System.out.println("*end of list.\n");
+        str += "*end of list.\n";
+        return str;
     }
 
     /**
@@ -175,34 +177,40 @@ public class AccountDatabase {
     }
 
     /**
-     * Prints monthly interests and fees that were calculated within each account type class.
+     * Returns string output of all accounts in the database with interest and fees.
+     * @return the number of accounts in the array
      */
-    public void printFeesAndInterests() {
+    public String printFeesAndInterests() {
         bubbleSort();
-        System.out.println("\n*list of accounts with fee and monthly interest");
+        String str = "";
+        str += "\n*list of accounts with fee and monthly interest\n";
         for (int i = 0; i < numAcct; i++) {
             if (accounts[i].monthlyFee() > 0 || accounts[i].monthlyInterest() > 0) {
-                System.out.println(accounts[i].toString() + "::fee $" + String.format("%.2f", accounts[i].monthlyFee())
-                        + "::monthly interest $" + String.format("%.2f", accounts[i].monthlyInterest()));
+                str += accounts[i].toString() + "::fee $" + String.format("%.2f", accounts[i].monthlyFee())
+                        + "::monthly interest $" + String.format("%.2f", accounts[i].monthlyInterest()) + "\n";
             }
         }
-        System.out.println("*end of list.\n");
+        str += "*end of list.\n";
+        return str;
     }
 
     /**
-     * Prints the updated balances after applying interests and fees.
+     * Returns string output of all accounts in the database with updated balances.
+     * @return the number of accounts in the array
      */
-    public void printUpdatedBalances() {
+    public String printUpdatedBalances() {
         bubbleSort();
-        System.out.println("\n*list of accounts with fees and interests applied.");
+        String str = "";
+        str += "\n*list of accounts with fees and interests applied.\n";
         for (int i = 0; i < numAcct; i++) {
             accounts[i].balance += accounts[i].monthlyInterest() - accounts[i].monthlyFee();
             if (accounts[i].getAccountType().equals("Money Market")) {
                 MoneyMarket moneyMarket = (MoneyMarket) accounts[i];
                 moneyMarket.resetWithdrawals();
             }
-            System.out.println(accounts[i].toString());
+            str += accounts[i].toString() + "\n";
         }
-        System.out.println("*end of list.\n");
+        str += "*end of list.\n";
+        return str;
     }
 }

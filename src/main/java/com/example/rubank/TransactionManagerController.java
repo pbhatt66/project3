@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javafx.stage.Stage;
-import javafx.beans.binding.Bindings;
 
 public class TransactionManagerController {
     private static final String CHECKING = "Checking";
@@ -28,7 +27,7 @@ public class TransactionManagerController {
     @FXML
     private RadioButton nb_open, newark_open, camden_open;
     @FXML
-    private ToggleGroup accountType, campus;
+    private ToggleGroup accountType_open, campus;
     @FXML
     private CheckBox loyalCustomer;
     @FXML
@@ -59,10 +58,20 @@ public class TransactionManagerController {
             }
         });
 
-        checking_open.setToggleGroup(accountType);
-        collegeChecking_open.setToggleGroup(accountType);
-        savings_open.setToggleGroup(accountType);
-        moneyMarket_open.setToggleGroup(accountType);
+        checking_open.setToggleGroup(accountType_open);
+        collegeChecking_open.setToggleGroup(accountType_open);
+        savings_open.setToggleGroup(accountType_open);
+        moneyMarket_open.setToggleGroup(accountType_open);
+
+        checking_close.setToggleGroup(accountType_close);
+        collegeChecking_close.setToggleGroup(accountType_close);
+        savings_close.setToggleGroup(accountType_close);
+        moneyMarket_close.setToggleGroup(accountType_close);
+
+        checking_DW.setToggleGroup(accountType_DW);
+        collegeChecking_DW.setToggleGroup(accountType_DW);
+        savings_DW.setToggleGroup(accountType_DW);
+        moneyMarket_DW.setToggleGroup(accountType_DW);
 
         nb_open.setToggleGroup(campus);
         newark_open.setToggleGroup(campus);
@@ -129,6 +138,11 @@ public class TransactionManagerController {
         dob_DW.valueProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
         amount_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
 
+//        openButton.setOnAction(event -> clearOpenTab());
+//        closeButton.setOnAction(event -> clearCloseTab());
+//        depositButton.setOnAction(event -> clearDepositWithdrawTab());
+//        withdrawButton.setOnAction(event -> clearDepositWithdrawTab());
+
     }
 
     @FXML
@@ -138,14 +152,13 @@ public class TransactionManagerController {
         String lName = lName_open.getText();
         lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
         String dobString = dob_open.getValue().toString();
-        // System.out.println(dobString);
         Date dob;
         try { dob = parseDate(dobString);
         } catch (Exception e) {
             messageArea.appendText(e.getMessage() + "\n");
             return; }
         if (!dob.isOver16()) {
-            messageArea.appendText("DOB Invalid: " + dobString + " under 16.\n");
+            messageArea.appendText("DOB Invalid: " + dob.toString() + " under 16.\n");
             return;
         }
         Profile profile = new Profile(fName, lName, dob);
@@ -162,14 +175,14 @@ public class TransactionManagerController {
             return;
         }
 
-        String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
+        String accountTypeString = ((RadioButton) accountType_open.getSelectedToggle()).getText();
         Account account;
 
         switch (accountTypeString) {
             case CHECKING ->  {
                 account = new Checking(profile, depositAmount);
                 if (database.open(account)) {
-                    messageArea.appendText(fName + " " + lName + " " + dobString + "(C) opened.\n");
+                    messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(C) opened.\n");
                 }
                 else messageArea.appendText(fName + " " + lName + " " + dobString + "(C) is already in the database.\n");
             }
@@ -181,15 +194,15 @@ public class TransactionManagerController {
                     case NEWARK -> campus = Campus.NEWARK;
                     case CAMDEN -> campus = Campus.CAMDEN;
                     default -> {
-                        System.out.println("Invalid campus: " + campusString);
+                        messageArea.appendText("Invalid campus: " + campusString);
                         return;
                     }
                 }
                 account = new CollegeChecking(profile, depositAmount, campus);
                 if (database.open(account)) {
-                    messageArea.appendText(fName + " " + lName + " " + dobString + "(CC) opened.\n");
+                    messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(CC) opened.\n");
                 }
-                else messageArea.appendText(fName + " " + lName + " " + dobString + "(CC) is already in the database.\n");
+                else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(CC) is already in the database.\n");
 
             }
             case SAVINGS -> {
@@ -197,9 +210,9 @@ public class TransactionManagerController {
                 boolean isLoyalCustomer = (loyalCustomerInt == 1);
                 account = new Savings(profile, depositAmount, isLoyalCustomer);
                 if (database.open(account)) {
-                    messageArea.appendText(fName + " " + lName + " " + dobString + "(S) opened.\n");
+                    messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(S) opened.\n");
                 }
-                else messageArea.appendText(fName + " " + lName + " " + dobString + "(S) is already in the database.\n");
+                else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(S) is already in the database.\n");
             }
             case MONEY_MARKET -> {
 account = new MoneyMarket(profile, depositAmount);
@@ -209,7 +222,7 @@ account = new MoneyMarket(profile, depositAmount);
                 else messageArea.appendText(fName + " " + lName + " " + dobString + "(M) is already in the database.\n");
             }
             default -> {
-                System.out.println("Invalid account type: " + accountTypeString);
+                messageArea.appendText("Invalid account type: " + accountTypeString);
                 return;
             }
         }
@@ -222,10 +235,10 @@ account = new MoneyMarket(profile, depositAmount);
         boolean isDisabled;
 
         if (collegeCheckingSelected) {
-            isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType.getSelectedToggle() == null || campus.getSelectedToggle() == null;
+            isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType_open.getSelectedToggle() == null || campus.getSelectedToggle() == null;
         }
         else {
-            isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType.getSelectedToggle() == null;
+            isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType_open.getSelectedToggle() == null;
         }
         // boolean isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType.getSelectedToggle() == null;
         openButton.setDisable(isDisabled);
@@ -238,8 +251,8 @@ account = new MoneyMarket(profile, depositAmount);
         int year = Integer.parseInt(dateParts[0]);
 
         Date date = new Date(year, month, day);
-        if (!date.isValid()) throw new Exception("DOB invalid: " + dateString + " not a valid calendar date!");
-        if (date.isFutureDate()) throw new Exception("DOB invalid: " + dateString + " cannot be today or a future day.");
+        if (!date.isValid()) throw new Exception("DOB invalid: " + date.toString() + " not a valid calendar date!");
+        if (date.isFutureDate()) throw new Exception("DOB invalid: " + date.toString() + " cannot be today or a future day.");
         return date;
     }
 
@@ -247,6 +260,8 @@ account = new MoneyMarket(profile, depositAmount);
     private Button closeButton;
     @FXML
     private TextField fName_close, lName_close;
+    @FXML
+    private ToggleGroup accountType_close;
     @FXML
     private RadioButton checking_close, collegeChecking_close, savings_close, moneyMarket_close;
     @FXML
@@ -268,14 +283,14 @@ account = new MoneyMarket(profile, depositAmount);
         }
         Profile profile = new Profile(fName, lName, dob);
         Account account;
-        String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
+        String accountTypeString = ((RadioButton) accountType_close.getSelectedToggle()).getText();
         switch (accountTypeString) {
             case CHECKING -> account = new Checking(profile);
             case COLLEGE_CHECKING -> account = new CollegeChecking(profile);
             case SAVINGS -> account = new Savings(profile);
             case MONEY_MARKET -> account = new MoneyMarket(profile);
             default -> {
-                System.out.println("Invalid account type: " + accountTypeString);
+                messageArea.appendText("Invalid account type: " + accountTypeString);
                 return;
             }
         }
@@ -286,10 +301,14 @@ account = new MoneyMarket(profile, depositAmount);
     }
     @FXML
     private void closeKeyReleasedProperty() {
-        boolean isDisabled = fName_close.getText().isEmpty() || lName_close.getText().isEmpty() || dob_close.getValue() == null;
+        boolean isDisabled = fName_close.getText().isEmpty() || lName_close.getText().isEmpty() || dob_close.getValue() == null || accountType_close.getSelectedToggle() == null;
         closeButton.setDisable(isDisabled);
     }
 
+    @FXML
+    private ToggleGroup accountType_DW;
+    @FXML
+    private RadioButton checking_DW, collegeChecking_DW, savings_DW, moneyMarket_DW;
     @FXML
     private Button depositButton, withdrawButton;
     @FXML
@@ -308,7 +327,7 @@ account = new MoneyMarket(profile, depositAmount);
         try {
             dob = parseDate(dobString);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            messageArea.appendText(e.getMessage());
             return;
         }
         Profile profile = new Profile(fName, lName, dob);
@@ -321,18 +340,18 @@ account = new MoneyMarket(profile, depositAmount);
             }
         }
         catch (NumberFormatException e) {
-            System.out.println("Deposit amount must be a number.");
+            messageArea.appendText("Deposit amount must be a number.");
             return;
         }
         Account account;
-        String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
+        String accountTypeString = ((RadioButton) accountType_DW.getSelectedToggle()).getText();
         switch (accountTypeString) {
             case CHECKING -> account = new Checking(profile, amount);
             case COLLEGE_CHECKING -> account = new CollegeChecking(profile, amount);
             case SAVINGS -> account = new Savings(profile, amount);
             case MONEY_MARKET -> account = new MoneyMarket(profile, amount);
             default -> {
-                System.out.println("Invalid account type: " + accountTypeString);
+                messageArea.appendText("Invalid account type: " + accountTypeString);
                 return;
             }
         }
@@ -353,7 +372,7 @@ account = new MoneyMarket(profile, depositAmount);
         try {
             dob = parseDate(dobString);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            messageArea.appendText(e.getMessage());
             return;
         }
         Profile profile = new Profile(fName, lName, dob);
@@ -371,27 +390,27 @@ account = new MoneyMarket(profile, depositAmount);
         }
 
         Account account;
-        String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
+        String accountTypeString = ((RadioButton) accountType_DW.getSelectedToggle()).getText();
         switch (accountTypeString) {
             case CHECKING -> account = new Checking(profile, amount);
             case COLLEGE_CHECKING -> account = new CollegeChecking(profile, amount);
             case SAVINGS -> account = new Savings(profile, amount);
             case MONEY_MARKET -> account = new MoneyMarket(profile, amount);
             default -> {
-                System.out.println("Invalid account type: " + accountTypeString);
+                messageArea.appendText("Invalid account type: " + accountTypeString);
                 return;
             }
         }
         if (database.withdraw(account)) {
-            messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountType + ") Withdraw - balance updated.\n");
+            messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeString + ") Withdraw - balance updated.\n");
         }
-        else messageArea.appendText(fName + " " + lName + " " + dobString + "(" + accountType + ") is not in the database.\n");
+        else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeString + ") is not in the database.\n");
 
     }
 
     @FXML
     private void dwKeyReleasedProperty() {
-        boolean isDisabled = fName_DW.getText().isEmpty() || lName_DW.getText().isEmpty() || dob_DW.getValue() == null || amount_DW.getText().isEmpty();
+        boolean isDisabled = fName_DW.getText().isEmpty() || lName_DW.getText().isEmpty() || dob_DW.getValue() == null || amount_DW.getText().isEmpty() || accountType_DW.getSelectedToggle() == null;
         depositButton.setDisable(isDisabled);
         withdrawButton.setDisable(isDisabled);
     }
@@ -400,20 +419,20 @@ account = new MoneyMarket(profile, depositAmount);
     private Button printButton, printInterestAndFeesButton, printUpdatedBalancesButton, loadFromFileButton;
     @FXML
     private void print() {
-//        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
-//        else messageArea.appendText(database.printSorted());
+        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+        else messageArea.appendText(database.printSorted());
     }
 
     @FXML
     private void printInterestAndFees() {
-//        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
-//        else messageArea.appendText(database.printFeesAndInterests());
+        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+        else messageArea.appendText(database.printFeesAndInterests());
     }
 
     @FXML
     private void printUpdatedBalances() {
-//        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
-//        else messageArea.appendText(database.printUpdatedBalances());
+        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
+        else messageArea.appendText(database.printUpdatedBalances());
     }
 
     @FXML
@@ -474,15 +493,13 @@ account = new MoneyMarket(profile, depositAmount);
                             database.open(account);
                         }
                     }
-
                 }
+                messageArea.appendText("Accounts imported from file successful.\n");
             }
             catch (IOException e) {
                 messageArea.appendText("Error reading file: " + targetFile.getName() + "\n");
             }
-
         }
-
     }
 
     private void clearOpenTab() {
@@ -490,8 +507,11 @@ account = new MoneyMarket(profile, depositAmount);
         lName_open.clear();
         dob_open.setValue(null);
         depositAmount_open.clear();
-        accountType.selectToggle(null);
+        accountType_open.selectToggle(null);
         campus.selectToggle(null);
+        nb_open.setDisable(true);
+        newark_open.setDisable(true);
+        camden_open.setDisable(true);
         loyalCustomer.setSelected(false);
     }
 
@@ -499,7 +519,7 @@ account = new MoneyMarket(profile, depositAmount);
         fName_close.clear();
         lName_close.clear();
         dob_close.setValue(null);
-        accountType.selectToggle(null);
+        accountType_close.selectToggle(null);
     }
 
     private void clearDepositWithdrawTab() {
@@ -507,8 +527,7 @@ account = new MoneyMarket(profile, depositAmount);
         lName_DW.clear();
         dob_DW.setValue(null);
         amount_DW.clear();
-        accountType.selectToggle(null);
+        accountType_DW.selectToggle(null);
     }
-
 
 }

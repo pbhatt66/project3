@@ -24,7 +24,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rubank.TransactionManagerController">
     <fx:define>
-        <ToggleGroup fx:id="accountType" />
+        <ToggleGroup fx:id="accountType_open" />
+        <ToggleGroup fx:id="accountType_close" />
+        <ToggleGroup fx:id="accountType_DW" />
         <ToggleGroup fx:id="campus" />
     </fx:define>
     <top>
@@ -66,9 +68,9 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <RadioButton fx:id="checking_open" mnemonicParsing="false" text="Checking" toggleGroup="$accountType"/>
-                                                <RadioButton fx:id="collegeChecking_open" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton fx:id="savings_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="checking_open" mnemonicParsing="false" text="Checking" toggleGroup="$accountType_open"/>
+                                                <RadioButton fx:id="collegeChecking_open" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType_open"/>
+                                                <RadioButton fx:id="savings_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType_open"/>
                                                 <RadioButton fx:id="moneyMarket_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
                                             </children>
                                         </GridPane>
@@ -126,10 +128,10 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <RadioButton mnemonicParsing="false" text="Checking" toggleGroup="$accountType"/>
-                                                <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="checking_close" mnemonicParsing="false" text="Checking" toggleGroup="$accountType_close"/>
+                                                <RadioButton fx:id="collegeChecking_close" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType_close"/>
+                                                <RadioButton fx:id="savings_close" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType_close"/>
+                                                <RadioButton fx:id="moneyMarket_close" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
                                             </children>
                                         </GridPane>
                                         <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#close">
@@ -178,10 +180,10 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <RadioButton mnemonicParsing="false" text="Checking" toggleGroup="$accountType"/>
-                                                <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="checking_DW" mnemonicParsing="false" text="Checking" toggleGroup="$accountType_DW"/>
+                                                <RadioButton fx:id="collegeChecking_DW" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType_DW"/>
+                                                <RadioButton fx:id="savings_DW" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType_DW"/>
+                                                <RadioButton fx:id="moneyMarket_DW" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType_DW"/>
                                             </children>
                                         </GridPane>
                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="246.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
