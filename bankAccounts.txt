@@ -13,5 +13,3 @@ CC,Chris,Young,9/20/2006,500,0
 CC,Duke,Ellington,11/2/2002,900,1
 CC,Kate,Lindsey,11/2/2002,200,2
 S,John,Doe,2/19/1990,200,0
-
-
