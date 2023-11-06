@@ -29,7 +29,7 @@ public class TransactionManagerController {
     @FXML
     private DatePicker dob_open, dob_close, dob_DW;
     @FXML
-    private RadioButton checking_open, collegeChecking_open, savings_open, moneyMarket_open, checking_DW, collegeChecking_DW, savings_DW, moneyMarket_DW;;
+    private RadioButton checking_open, collegeChecking_open, savings_open, moneyMarket_open, checking_DW, collegeChecking_DW, savings_DW, moneyMarket_DW;
     @FXML
     private RadioButton nb_open, newark_open, camden_open;
     @FXML
@@ -48,6 +48,18 @@ public class TransactionManagerController {
     private RadioButton checking_close, collegeChecking_close, savings_close, moneyMarket_close;
 
     private AccountDatabase database = new AccountDatabase();
+
+    private void activateAutoSubmit(DatePicker datePicker) {
+        datePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                try {
+                    datePicker.setValue(datePicker.getConverter().fromString(datePicker.getEditor().getText()));
+                } catch (Exception e) {
+                    datePicker.getEditor().setText(datePicker.getConverter().toString(datePicker.getValue()));
+                }
+            }
+        });
+    }
 
     /**
      * Parses the date string and returns a Date object.
@@ -148,6 +160,9 @@ public class TransactionManagerController {
             camden_open.setSelected(false);
         });
 
+        activateAutoSubmit(dob_open);
+        activateAutoSubmit(dob_close);
+        activateAutoSubmit(dob_DW);
 
         openButton.setDisable(true);
         fName_open.textProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
@@ -247,7 +262,7 @@ public class TransactionManagerController {
                 else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(S) is already in the database.\n");
             }
             case MONEY_MARKET -> {
-account = new MoneyMarket(profile, depositAmount);
+                account = new MoneyMarket(profile, depositAmount);
                 if (database.open(account)) {
                     messageArea.appendText(fName + " " + lName + " " + dobString + "(M) opened.\n");
                 }
