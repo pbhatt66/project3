@@ -9,6 +9,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import javafx.stage.Stage;
 
+/**
+ * TransactionManagerController class handles the events triggered on the GUI.
+ *
+ * @author Pranay Bhatt
+ */
+
 public class TransactionManagerController {
     private static final String CHECKING = "Checking";
     private static final String COLLEGE_CHECKING = "College Checking";
@@ -43,6 +49,12 @@ public class TransactionManagerController {
 
     private AccountDatabase database = new AccountDatabase();
 
+    /**
+     * Parses the date string and returns a Date object.
+     * @param dateString the date string in the format MM/DD/YYYY
+     * @return the Date object
+     * @throws Exception if the date is invalid or a future date.
+     */
     private Date parseDate(String dateString) throws Exception {
         String[] dateParts = dateString.split("-");
         int month = Integer.parseInt(dateParts[1]);
@@ -55,6 +67,9 @@ public class TransactionManagerController {
         return date;
     }
 
+    /**
+     *
+     */
     public void initialize() {
         openTab.setOnSelectionChanged(event -> {
             if (openTab.isSelected()) {
