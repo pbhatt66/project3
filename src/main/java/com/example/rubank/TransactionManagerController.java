@@ -1,9 +1,13 @@
 package com.example.rubank;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javafx.stage.Stage;
 
 public class TransactionManagerController {
     private static final String CHECKING = "Checking";
@@ -329,6 +333,75 @@ account = new MoneyMarket(profile, depositAmount);
     private void printUpdatedBalances() {
 //        if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
 //        else messageArea.appendText(database.printUpdatedBalances());
+    }
+
+    @FXML
+    private void loadFromFile() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open Source File for the Import");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("TXT files", "*.TXT"));
+        Stage stage = new Stage();
+        File targetFile = chooser.showOpenDialog(stage);
+        if (targetFile != null) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(targetFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    String accountType = parts[0];
+                    String fName = parts[1];
+                    String lName = parts[2];
+
+                    String dobString = parts[3];
+                    String[] dateParts = dobString.split("/");
+                    int month = Integer.parseInt(dateParts[0]);
+                    int day = Integer.parseInt(dateParts[1]);
+                    int year = Integer.parseInt(dateParts[2]);
+                    Date dob = new Date(year, month, day);
+
+                    Profile profile = new Profile(fName, lName, dob);
+
+                    double depositAmount = Double.parseDouble(parts[4]);
+                    switch (accountType) {
+                        case "C" -> {
+                            Account account = new Checking(profile, depositAmount);
+                            database.open(account);
+                        }
+                        case "CC" -> {
+                            Campus campus;
+                            switch (parts[5]) {
+                                case "0" -> campus = Campus.NEW_BRUNSWICK;
+                                case "1" -> campus = Campus.NEWARK;
+                                case "2" -> campus = Campus.CAMDEN;
+                                default -> {
+                                    messageArea.appendText("Invalid campus.\n");
+                                    return;
+                                }
+                            }
+                            Account account = new CollegeChecking(profile, depositAmount, campus);
+                            database.open(account);
+                        }
+                        case "S" -> {
+                            int loyalCustomerInt = Integer.parseInt(parts[5]);
+                            boolean isLoyalCustomer = (loyalCustomerInt == 1);
+                            Account account = new Savings(profile, depositAmount, isLoyalCustomer);
+                            database.open(account);
+                        }
+                        case "M" -> {
+                            Account account = new MoneyMarket(profile, depositAmount);
+                            database.open(account);
+                        }
+                    }
+
+                }
+            }
+            catch (IOException e) {
+                messageArea.appendText("Error reading file: " + targetFile.getName() + "\n");
+            }
+
+        }
+
     }
 
 }

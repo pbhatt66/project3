@@ -220,7 +220,7 @@
                                     </rowConstraints>
                                     <children>
                                         <Button fx:id="printButton" alignment="CENTER" mnemonicParsing="false" prefHeight="41.0" prefWidth="250.0" text="Print All Accounts" onAction="#print"/>
-                                        <Button fx:id="loadFromFileButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Load Accounts from a File" GridPane.columnIndex="1"/>
+                                        <Button fx:id="loadFromFileButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Load Accounts from a File" GridPane.columnIndex="1" onAction="#loadFromFile"/>
                                         <Button fx:id="printInterestAndFeesButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Print Interest and Fees" GridPane.rowIndex="1" onAction="#printInterestAndFees"/>
                                         <Button fx:id="printUpdatedBalancesButton" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" text="Update Accounts with Interests and Fees" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#printUpdatedBalances"/>
                                     </children>
