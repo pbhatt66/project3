@@ -71,10 +71,10 @@
                                                 <RadioButton fx:id="checking_open" mnemonicParsing="false" text="Checking" toggleGroup="$accountType_open"/>
                                                 <RadioButton fx:id="collegeChecking_open" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType_open"/>
                                                 <RadioButton fx:id="savings_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType_open"/>
-                                                <RadioButton fx:id="moneyMarket_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="moneyMarket_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType_open"/>
                                             </children>
                                         </GridPane>
-                                        <Button fx:id="openButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Open" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#open">
+                                        <Button fx:id="openButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Open" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#handleOpenButtonAction">
                                             <GridPane.margin>
                                                 <Insets left="20.0" />
                                             </GridPane.margin></Button>
@@ -131,10 +131,10 @@
                                                 <RadioButton fx:id="checking_close" mnemonicParsing="false" text="Checking" toggleGroup="$accountType_close"/>
                                                 <RadioButton fx:id="collegeChecking_close" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType_close"/>
                                                 <RadioButton fx:id="savings_close" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType_close"/>
-                                                <RadioButton fx:id="moneyMarket_close" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="moneyMarket_close" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType_close"/>
                                             </children>
                                         </GridPane>
-                                        <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#close">
+                                        <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#handleCloseButtonAction">
                                             <GridPane.margin>
                                                 <Insets left="20.0" />
                                             </GridPane.margin>
@@ -188,8 +188,8 @@
                                         </GridPane>
                                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="246.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                             <children>
-                                                <Button fx:id="depositButton" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Deposit" onAction="#deposit"/>
-                                                <Button fx:id="withdrawButton" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Withdraw" onAction="#withdraw">
+                                                <Button fx:id="depositButton" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Deposit" onAction="#handleDepositButtonAction"/>
+                                                <Button fx:id="withdrawButton" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Withdraw" onAction="#handleWithdrawButtonAction">
                                                     <HBox.margin>
                                                         <Insets left="25.0" />
                                                     </HBox.margin>
@@ -231,34 +231,34 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="MenuBar">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <MenuBar layoutX="205.0" layoutY="29.0" AnchorPane.leftAnchor="205.0" AnchorPane.topAnchor="29.0">
-                                    <menus>
-                                        <Menu mnemonicParsing="false" text="Account">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="Open" />
-                                                <MenuItem mnemonicParsing="false" text="Close" />
-                                                <MenuItem mnemonicParsing="false" text="Deposit" />
-                                                <MenuItem mnemonicParsing="false" text="Withdraw" />
-                                                <MenuItem mnemonicParsing="false" text="Load from File" />
-                                                <MenuItem mnemonicParsing="false" text="Print All" />
-                                            </items>
-                                        </Menu>
-                                        <Menu mnemonicParsing="false" text="Interests and Fees">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="Print" />
-                                                <MenuItem mnemonicParsing="false" text="Apply and Update Accounts" />
-                                            </items>
-                                        </Menu>
-                                    </menus>
-                                </MenuBar>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
+<!--                <Tab text="MenuBar">-->
+<!--                    <content>-->
+<!--                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">-->
+<!--                            <children>-->
+<!--                                <MenuBar layoutX="205.0" layoutY="29.0" AnchorPane.leftAnchor="205.0" AnchorPane.topAnchor="29.0">-->
+<!--                                    <menus>-->
+<!--                                        <Menu mnemonicParsing="false" text="Account">-->
+<!--                                            <items>-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Open" />-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Close" />-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Deposit" />-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Withdraw" />-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Load from File" />-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Print All" />-->
+<!--                                            </items>-->
+<!--                                        </Menu>-->
+<!--                                        <Menu mnemonicParsing="false" text="Interests and Fees">-->
+<!--                                            <items>-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Print" />-->
+<!--                                                <MenuItem mnemonicParsing="false" text="Apply and Update Accounts" />-->
+<!--                                            </items>-->
+<!--                                        </Menu>-->
+<!--                                    </menus>-->
+<!--                                </MenuBar>-->
+<!--                            </children>-->
+<!--                        </AnchorPane>-->
+<!--                    </content>-->
+<!--                </Tab>-->
             </tabs>
         </TabPane>
     </top>
