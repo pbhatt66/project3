@@ -43,6 +43,18 @@ public class TransactionManagerController {
 
     private AccountDatabase database = new AccountDatabase();
 
+    private void activateAutoSubmit(DatePicker datePicker) {
+        datePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                try {
+                    datePicker.setValue(datePicker.getConverter().fromString(datePicker.getEditor().getText()));
+                } catch (Exception e) {
+                    datePicker.getEditor().setText(datePicker.getConverter().toString(datePicker.getValue()));
+                }
+            }
+        });
+    }
+
     private Date parseDate(String dateString) throws Exception {
         String[] dateParts = dateString.split("-");
         int month = Integer.parseInt(dateParts[1]);
@@ -133,6 +145,9 @@ public class TransactionManagerController {
             camden_open.setSelected(false);
         });
 
+        activateAutoSubmit(dob_open);
+        activateAutoSubmit(dob_close);
+        activateAutoSubmit(dob_DW);
 
         openButton.setDisable(true);
         fName_open.textProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
@@ -232,7 +247,7 @@ public class TransactionManagerController {
                 else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(S) is already in the database.\n");
             }
             case MONEY_MARKET -> {
-account = new MoneyMarket(profile, depositAmount);
+                account = new MoneyMarket(profile, depositAmount);
                 if (database.open(account)) {
                     messageArea.appendText(fName + " " + lName + " " + dobString + "(M) opened.\n");
                 }
