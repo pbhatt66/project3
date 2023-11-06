@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javafx.stage.Stage;
+import javafx.beans.binding.Bindings;
 
 public class TransactionManagerController {
     private static final String CHECKING = "Checking";
@@ -34,10 +35,82 @@ public class TransactionManagerController {
     private Button openButton;
     @FXML
     private TextArea messageArea;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Tab openTab, closeTab, depositWithdrawTab;
 
     private AccountDatabase database = new AccountDatabase();
 
     public void initialize() {
+        openTab.setOnSelectionChanged(event -> {
+            if (openTab.isSelected()) {
+                clearOpenTab();
+            }
+        });
+        closeTab.setOnSelectionChanged(event -> {
+            if (closeTab.isSelected()) {
+                clearCloseTab();
+            }
+        });
+        depositWithdrawTab.setOnSelectionChanged(event -> {
+            if (depositWithdrawTab.isSelected()) {
+                clearDepositWithdrawTab();
+            }
+        });
+
+        checking_open.setToggleGroup(accountType);
+        collegeChecking_open.setToggleGroup(accountType);
+        savings_open.setToggleGroup(accountType);
+        moneyMarket_open.setToggleGroup(accountType);
+
+        nb_open.setToggleGroup(campus);
+        newark_open.setToggleGroup(campus);
+        camden_open.setToggleGroup(campus);
+
+        nb_open.setDisable(true);
+        newark_open.setDisable(true);
+        camden_open.setDisable(true);
+        loyalCustomer.setDisable(true);
+
+        savings_open.setOnAction(event -> {
+            loyalCustomer.setDisable(false);
+            nb_open.setDisable(true);
+            newark_open.setDisable(true);
+            camden_open.setDisable(true);
+            nb_open.setSelected(false);
+            newark_open.setSelected(false);
+            camden_open.setSelected(false);
+        });
+        checking_open.setOnAction(event -> {
+            loyalCustomer.setDisable(true);
+            loyalCustomer.setSelected(false);
+            nb_open.setDisable(true);
+            newark_open.setDisable(true);
+            camden_open.setDisable(true);
+            nb_open.setSelected(false);
+            newark_open.setSelected(false);
+            camden_open.setSelected(false);
+        });
+        collegeChecking_open.setOnAction(event -> {
+            loyalCustomer.setDisable(true);
+            loyalCustomer.setSelected(false);
+            nb_open.setDisable(false);
+            newark_open.setDisable(false);
+            camden_open.setDisable(false);
+        });
+        moneyMarket_open.setOnAction(event -> {
+            loyalCustomer.setDisable(true);
+            loyalCustomer.setSelected(false);
+            nb_open.setDisable(true);
+            newark_open.setDisable(true);
+            camden_open.setDisable(true);
+            nb_open.setSelected(false);
+            newark_open.setSelected(false);
+            camden_open.setSelected(false);
+        });
+
+
         openButton.setDisable(true);
         fName_open.textProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
         lName_open.textProperty().addListener((observable, oldValue, newValue) -> openKeyReleasedProperty());
@@ -90,9 +163,8 @@ public class TransactionManagerController {
         }
 
         String accountTypeString = ((RadioButton) accountType.getSelectedToggle()).getText();
-        // System.out.println(accountTypeString);
-        // messageArea.appendText("Account opened for " + fName + " " + lName + " born on " + dobString + "\n");
         Account account;
+
         switch (accountTypeString) {
             case CHECKING ->  {
                 account = new Checking(profile, depositAmount);
@@ -146,7 +218,16 @@ account = new MoneyMarket(profile, depositAmount);
 
     @FXML
     private void openKeyReleasedProperty() {
-        boolean isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty();
+        boolean collegeCheckingSelected = collegeChecking_open.isSelected();
+        boolean isDisabled;
+
+        if (collegeCheckingSelected) {
+            isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType.getSelectedToggle() == null || campus.getSelectedToggle() == null;
+        }
+        else {
+            isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType.getSelectedToggle() == null;
+        }
+        // boolean isDisabled = fName_open.getText().isEmpty() || lName_open.getText().isEmpty() || dob_open.getValue() == null || depositAmount_open.getText().isEmpty() || accountType.getSelectedToggle() == null;
         openButton.setDisable(isDisabled);
     }
 
@@ -403,5 +484,31 @@ account = new MoneyMarket(profile, depositAmount);
         }
 
     }
+
+    private void clearOpenTab() {
+        fName_open.clear();
+        lName_open.clear();
+        dob_open.setValue(null);
+        depositAmount_open.clear();
+        accountType.selectToggle(null);
+        campus.selectToggle(null);
+        loyalCustomer.setSelected(false);
+    }
+
+    private void clearCloseTab() {
+        fName_close.clear();
+        lName_close.clear();
+        dob_close.setValue(null);
+        accountType.selectToggle(null);
+    }
+
+    private void clearDepositWithdrawTab() {
+        fName_DW.clear();
+        lName_DW.clear();
+        dob_DW.setValue(null);
+        amount_DW.clear();
+        accountType.selectToggle(null);
+    }
+
 
 }

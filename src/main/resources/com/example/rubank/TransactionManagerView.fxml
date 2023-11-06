@@ -28,9 +28,9 @@
         <ToggleGroup fx:id="campus" />
     </fx:define>
     <top>
-        <TabPane prefHeight="330.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <TabPane fx:id="tabPane" prefHeight="330.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab text="Open">
+                <Tab fx:id="openTab" text="Open">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="600.0">
                             <children>
@@ -66,10 +66,10 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <RadioButton mnemonicParsing="false" text="Checking" toggleGroup="$accountType"/>
-                                                <RadioButton mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType"/>
-                                                <RadioButton layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="checking_open" mnemonicParsing="false" text="Checking" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="collegeChecking_open" mnemonicParsing="false" text="College Checking" GridPane.columnIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="savings_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Savings" GridPane.rowIndex="1" toggleGroup="$accountType"/>
+                                                <RadioButton fx:id="moneyMarket_open" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Money Market" GridPane.columnIndex="1" GridPane.rowIndex="1" toggleGroup="$accountType"/>
                                             </children>
                                         </GridPane>
                                         <Button fx:id="openButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Open" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#open">
@@ -80,10 +80,10 @@
                                         <TextField fx:id="depositAmount_open" prefHeight="26.0" prefWidth="242.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                             <children>
-                                                <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="70.0" text="NB" toggleGroup="$campus"/>
-                                                <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="86.0" text="Newark" toggleGroup="$campus"/>
-                                                <RadioButton mnemonicParsing="false" prefHeight="18.0" prefWidth="95.0" text="Camden" toggleGroup="$campus"/>
-                                                <CheckBox fx:id="loyalCustomer" mnemonicParsing="false" prefHeight="60.0" prefWidth="153.0" text="Loyal Customer" />
+                                                <RadioButton fx:id="nb_open" mnemonicParsing="false" prefHeight="18.0" prefWidth="70.0" text="NB" toggleGroup="$campus"/>
+                                                <RadioButton fx:id="newark_open" mnemonicParsing="false" prefHeight="18.0" prefWidth="86.0" text="Newark" toggleGroup="$campus"/>
+                                                <RadioButton fx:id="camden_open" mnemonicParsing="false" prefHeight="18.0" prefWidth="95.0" text="Camden" toggleGroup="$campus"/>
+                                                <CheckBox fx:id="loyalCustomer" mnemonicParsing="false" prefHeight="60.0" prefWidth="153.0" text="Loyal Customer"/>
                                             </children>
                                         </VBox>
                                     </children>
@@ -92,7 +92,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Close">
+                <Tab fx:id="closeTab" text="Close">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="283.0" prefWidth="600.0">
                             <children>
@@ -143,7 +143,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Deposit/Withdraw">
+                <Tab fx:id="depositWithdrawTab" text="Deposit/Withdraw">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -261,7 +261,7 @@
         </TabPane>
     </top>
     <bottom>
-        <TextArea fx:id="messageArea" prefHeight="244.0" prefWidth="570.0" wrapText="true" BorderPane.alignment="CENTER">
+        <TextArea fx:id="messageArea" prefHeight="244.0" prefWidth="570.0" wrapText="true" BorderPane.alignment="CENTER" editable="false">
             <BorderPane.margin>
                 <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
             </BorderPane.margin>
