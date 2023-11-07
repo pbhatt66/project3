@@ -204,11 +204,11 @@ public class TransactionManagerController {
      */
     @FXML
     private void open() {
-        String fName = fName_open.getText();
+        String fName = fName_open.getText().trim();
         fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
-        String lName = lName_open.getText();
+        String lName = lName_open.getText().trim();
         lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
-        String dobString = dob_open.getValue().toString();
+        String dobString = dob_open.getValue().toString().trim();
         Date dob;
         try { dob = parseDate(dobString);
         } catch (Exception e) {
@@ -318,11 +318,11 @@ public class TransactionManagerController {
      */
     @FXML
     private void close() {
-        String fName = fName_close.getText();
+        String fName = fName_close.getText().trim();
         fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
-        String lName = lName_close.getText();
+        String lName = lName_close.getText().trim();
         lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
-        String dobString = dob_close.getValue().toString();
+        String dobString = dob_close.getValue().toString().trim();
 
         Date dob;
         try {
@@ -390,11 +390,11 @@ public class TransactionManagerController {
      */
     @FXML
     private void deposit() {
-        String fName = fName_DW.getText();
+        String fName = fName_DW.getText().trim();
         fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
-        String lName = lName_DW.getText();
+        String lName = lName_DW.getText().trim();
         lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
-        String dobString = dob_DW.getValue().toString();
+        String dobString = dob_DW.getValue().toString().trim();
 
         Date dob;
         try {
@@ -447,11 +447,11 @@ public class TransactionManagerController {
      */
     @FXML
     private void withdraw() {
-        String fName = fName_DW.getText();
+        String fName = fName_DW.getText().trim();
         fName = fName.substring(0, 1).toUpperCase() + fName.substring(1).toLowerCase();
-        String lName = lName_DW.getText();
+        String lName = lName_DW.getText().trim();
         lName = lName.substring(0, 1).toUpperCase() + lName.substring(1).toLowerCase();
-        String dobString = dob_DW.getValue().toString();
+        String dobString = dob_DW.getValue().toString().trim();
 
         Date dob;
         try {
