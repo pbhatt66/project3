@@ -1,4 +1,4 @@
-module com.example.project3 {
+module com.example.rubank {
     requires javafx.controls;
     requires javafx.fxml;
 
