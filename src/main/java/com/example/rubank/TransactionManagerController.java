@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * TransactionManagerController class handles the events triggered on the GUI.
  *
- * @author Pranay Bhatt
+ * @author Pranay Bhatt and Fiona Wang
  */
 
 public class TransactionManagerController {
@@ -80,7 +80,11 @@ public class TransactionManagerController {
     }
 
     /**
-     *
+     * Initializes event handlers and properties in the GUI:
+     * clearing each tab when the tab is selected,
+     * setting up and configuring all radio buttons and their toggle groups,
+     * using listeners to track changes in text fields,
+     * and disabling the buttons unless there are valid inputs in each tab.
      */
     public void initialize() {
         openTab.setOnSelectionChanged(event -> {
@@ -184,14 +188,20 @@ public class TransactionManagerController {
         dob_DW.valueProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
         amount_DW.textProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
         accountType_DW.selectedToggleProperty().addListener((observable, oldValue, newValue) -> dwKeyReleasedProperty());
-
     }
+
+    /**
+     * Handles the "open" button to direct to the method that opens an account, and clears the tab.
+     */
     @FXML
     private void handleOpenButtonAction() {
         open();
         clearOpenTab();
     }
 
+    /**
+     * Opens an account using user inputs from the "open" tab.
+     */
     @FXML
     private void open() {
         String fName = fName_open.getText();
@@ -276,6 +286,9 @@ public class TransactionManagerController {
 
     }
 
+    /**
+     * Ensures the "open" button is disabled unless the required fields and selections are properly filled/made.
+     */
     @FXML
     private void openKeyReleasedProperty() {
         boolean collegeCheckingSelected = collegeChecking_open.isSelected();
@@ -291,12 +304,18 @@ public class TransactionManagerController {
         openButton.setDisable(isDisabled);
     }
 
+    /**
+     * Handles the "close" button to direct to the method that closes an account, and clears the tab.
+     */
     @FXML
     private void handleCloseButtonAction() {
         close();
         clearCloseTab();
     }
 
+    /**
+     * Closes an account using user inputs from the "close" tab.
+     */
     @FXML
     private void close() {
         String fName = fName_close.getText();
@@ -338,22 +357,37 @@ public class TransactionManagerController {
         }
         else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") is not in the database.\n");
     }
+
+    /**
+     * Ensures the "close" button is disabled unless the required fields and selections are properly filled/made.
+     */
     @FXML
     private void closeKeyReleasedProperty() {
         boolean isDisabled = fName_close.getText().isEmpty() || lName_close.getText().isEmpty() || dob_close.getValue() == null || accountType_close.getSelectedToggle() == null;
         closeButton.setDisable(isDisabled);
     }
 
+    /**
+     * Handles the "deposit" button to direct to the method that deposits an amount to an account, and clears the tab.
+     */
     @FXML
     private void handleDepositButtonAction() {
         deposit();
         clearDepositWithdrawTab();
     }
+
+    /**
+     * Handles the "withdraw" button to direct to the method that withdraws an amount from an account, and clears the tab.
+     */
     @FXML
     private void handleWithdrawButtonAction() {
         withdraw();
         clearDepositWithdrawTab();
     }
+
+    /**
+     * Deposits an amount to an account using user inputs from the "deposit/withdraw" tab.
+     */
     @FXML
     private void deposit() {
         String fName = fName_DW.getText();
@@ -407,6 +441,10 @@ public class TransactionManagerController {
         }
         else messageArea.appendText(fName + " " + lName + " " + dob.toString() + "(" + accountTypeShortString + ") is not in the database.\n");
     }
+
+    /**
+     * Withdraws an amount from an account using user inputs from the "deposit/withdraw" tab.
+     */
     @FXML
     private void withdraw() {
         String fName = fName_DW.getText();
@@ -466,6 +504,9 @@ public class TransactionManagerController {
 
     }
 
+    /**
+     * Ensures the "withdraw" and "deposit" buttons are disabled unless the required fields and selections are properly filled/made.
+     */
     @FXML
     private void dwKeyReleasedProperty() {
         boolean isDisabled = fName_DW.getText().isEmpty() || lName_DW.getText().isEmpty() || dob_DW.getValue() == null || amount_DW.getText().isEmpty() || accountType_DW.getSelectedToggle() == null;
