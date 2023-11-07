@@ -516,24 +516,37 @@ public class TransactionManagerController {
 
     @FXML
     private Button printButton, printInterestAndFeesButton, printUpdatedBalancesButton, loadFromFileButton;
+
+    /**
+     * Processes the print event.
+     */
     @FXML
     private void print() {
         if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
         else messageArea.appendText(database.printSorted());
     }
 
+    /**
+     * Processes the print interest and fees event.
+     */
     @FXML
     private void printInterestAndFees() {
         if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
         else messageArea.appendText(database.printFeesAndInterests());
     }
 
+    /**
+     * Processes the print updated balances event.
+     */
     @FXML
     private void printUpdatedBalances() {
         if (database.isEmpty()) messageArea.appendText("Account Database is empty.\n");
         else messageArea.appendText(database.printUpdatedBalances());
     }
 
+    /**
+     * Imports and loads an open source file and reads the contents of that file to open new accounts.
+     */
     @FXML
     private void loadFromFile() {
         FileChooser chooser = new FileChooser();
@@ -601,6 +614,9 @@ public class TransactionManagerController {
         }
     }
 
+    /**
+     * Clears the "open" tab and resets to its default state.
+     */
     private void clearOpenTab() {
         fName_open.clear();
         lName_open.clear();
@@ -614,6 +630,9 @@ public class TransactionManagerController {
         loyalCustomer.setSelected(false);
     }
 
+    /**
+     * Clears the "close" tab and resets to its default state.
+     */
     private void clearCloseTab() {
         fName_close.clear();
         lName_close.clear();
@@ -621,6 +640,9 @@ public class TransactionManagerController {
         accountType_close.selectToggle(null);
     }
 
+    /**
+     * Clears the "Deposit/Withdraw" tab and resets to its default state.
+     */
     private void clearDepositWithdrawTab() {
         fName_DW.clear();
         lName_DW.clear();
